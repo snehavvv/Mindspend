@@ -91,8 +91,30 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* Right Actions: Theme Toggle, User, Logout */}
+        {/* Right Actions: Command Palette, Theme Toggle, User, Logout */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Quick Search / Command Palette Trigger */}
+          <button
+            onClick={() => {
+              const event = new KeyboardEvent('keydown', {
+                key: 'k',
+                metaKey: true,
+                bubbles: true,
+              })
+              document.dispatchEvent(event)
+            }}
+            aria-label="Open command palette"
+            className="hidden sm:flex items-center gap-2 h-9 px-2.5 rounded-lg border border-border bg-surface-elevated/80 text-xs text-text-secondary hover:text-text-primary hover:border-accent/50 transition-colors shadow-sm"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <span className="text-[11px] font-medium">Search...</span>
+            <kbd className="ml-1 px-1.5 py-0.5 text-[10px] font-semibold text-text-secondary bg-surface border border-border rounded">
+              ⌘K
+            </kbd>
+          </button>
+
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"

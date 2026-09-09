@@ -3,6 +3,8 @@ import { ThemeProvider }      from '@/context/ThemeContext'
 import { AuthProvider }       from '@/context/AuthContext'
 import { Toaster }            from '@/components/ui'
 import { ProtectedRoute }     from '@/components/auth/ProtectedRoute'
+import { PageTransition }     from '@/components/layout/PageTransition'
+import { CommandPalette }     from '@/components/navigation/CommandPalette'
 import { LoginPage }          from '@/pages/LoginPage'
 import { SignupPage }         from '@/pages/SignupPage'
 import { DashboardPage }      from '@/pages/DashboardPage'
@@ -15,20 +17,46 @@ export default function App() {
     <ThemeProvider>
       <AuthProvider>
         <BrowserRouter>
+          {/* Global Command Palette (Cmd/Ctrl+K) */}
+          <CommandPalette />
+
           <Routes>
             {/* Public auth routes */}
-            <Route path="/login"       element={<LoginPage />}  />
-            <Route path="/signup"      element={<SignupPage />} />
+            <Route
+              path="/login"
+              element={
+                <PageTransition>
+                  <LoginPage />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <PageTransition>
+                  <SignupPage />
+                </PageTransition>
+              }
+            />
 
             {/* Design system review */}
-            <Route path="/style-guide" element={<StyleGuide />} />
+            <Route
+              path="/style-guide"
+              element={
+                <PageTransition>
+                  <StyleGuide />
+                </PageTransition>
+              }
+            />
 
             {/* Protected routes */}
             <Route
               path="/dashboard"
               element={
                 <ProtectedRoute>
-                  <DashboardPage />
+                  <PageTransition>
+                    <DashboardPage />
+                  </PageTransition>
                 </ProtectedRoute>
               }
             />
@@ -36,7 +64,9 @@ export default function App() {
               path="/transactions"
               element={
                 <ProtectedRoute>
-                  <TransactionsPage />
+                  <PageTransition>
+                    <TransactionsPage />
+                  </PageTransition>
                 </ProtectedRoute>
               }
             />
@@ -44,7 +74,9 @@ export default function App() {
               path="/budgets"
               element={
                 <ProtectedRoute>
-                  <BudgetsPage />
+                  <PageTransition>
+                    <BudgetsPage />
+                  </PageTransition>
                 </ProtectedRoute>
               }
             />
