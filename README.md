@@ -67,7 +67,7 @@ graph TD
 | **Frontend** | React 18, TypeScript, Vite, Tailwind CSS, Recharts, Framer Motion, Cmdk, Lucide Icons |
 | **Backend** | Python 3.11, FastAPI, Pydantic v2, Motor (Async MongoDB), Passlib & Bcrypt, PyJWT |
 | **Testing** | Vitest + React Testing Library (Frontend), Pytest + Asyncio (Backend) |
-| **Infrastructure** | Terraform, AWS S3, CloudFront, Lambda, API Gateway, Amazon DocumentDB / MongoDB Atlas |
+| **Infrastructure** | Shell Scripts (Bash & PowerShell), AWS CLI, AWS S3, CloudFront, Lambda, API Gateway, Amazon DocumentDB / MongoDB Atlas |
 
 ---
 
@@ -130,20 +130,16 @@ pytest
 
 ---
 
-## 🚀 AWS Serverless Deployment
+## 🚀 AWS Serverless Deployment (Pure Shell Scripts & AWS CLI)
 
-Provision infrastructure and deploy with a single command:
+Deploy frontend and backend with pure shell scripts (no Terraform required):
 
 ```bash
-# Using Bash:
-export AWS_REGION="us-east-1"
-export ENVIRONMENT="production"
-./scripts/deploy-aws.sh
+# Frontend Deployment (AWS S3 & CloudFront):
+./scripts/deploy-aws-cli.sh
 
-# Using PowerShell:
-$env:AWS_REGION = "us-east-1"
-$env:ENVIRONMENT = "production"
-.\scripts\deploy-aws.ps1
+# On Windows PowerShell:
+.\scripts\deploy-aws-cli.ps1
 ```
 
 ---
