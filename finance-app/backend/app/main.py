@@ -42,10 +42,16 @@ app = FastAPI(
 
 # ── CORS — must be registered before any router ──────────────────────────────
 # allow_credentials=True is required for the browser to send httpOnly cookies.
-# Must use explicit origins (not "*") when credentials are enabled.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://finlytics-app-prod-108d5c0e.s3-website-us-west-2.amazonaws.com",
+    ],
+    allow_origin_regex=r"https?://.*(localhost|127\.0\.0\.1|amazonaws\.com|cloudfront\.net)(:\d+)?",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

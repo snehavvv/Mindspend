@@ -162,11 +162,11 @@ export function SignupPage() {
 
       toast.success('Account created!', { description: 'Welcome to Finlytics 🎉' })
       setTimeout(() => navigate('/dashboard', { replace: true }), 500)
-    } catch (err) {
-      const ae = err as AxiosError<{ detail?: string | Array<{ loc: string[]; msg: string }> }>
-      const detail = ae.response?.data?.detail
+    } catch (err: any) {
+      const detail = err.response?.data?.detail
+      const status = err.response?.status
 
-      if (ae.response?.status === 422 && Array.isArray(detail)) {
+      if (status === 422 && Array.isArray(detail)) {
         // Map backend field-level errors to the form
         const mapped: Record<string, string> = {}
         for (const d of detail) {
@@ -179,6 +179,8 @@ export function SignupPage() {
         }
       } else if (typeof detail === 'string') {
         setApiError(detail)
+      } else if (err.message && !err.response) {
+        setApiError('Unable to connect to the API server. Please ensure the backend is running at ' + (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api'))
       } else {
         setApiError('Something went wrong. Please try again.')
       }
