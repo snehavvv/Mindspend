@@ -75,10 +75,13 @@ export function LoginPage() {
       toast.success('Welcome back!', { description: 'Taking you to your dashboard…' })
       // Short delay so the toast is visible before the route changes
       setTimeout(() => navigate(from, { replace: true }), 500)
-    } catch (err) {
-      const ae = err as AxiosError<{ detail?: string | Array<{ loc: string[]; msg: string }> }>
-      if (ae.response?.status === 401) {
+    } catch (err: any) {
+      if (err.response?.status === 401) {
         setAuthError("That email or password isn't right. Give it another try.")
+      } else if (typeof err.response?.data?.detail === 'string') {
+        setAuthError(err.response.data.detail)
+      } else if (!err.response) {
+        setAuthError('Unable to connect to local API server (http://localhost:8000/api). Please open http://localhost:5173 for local development or deploy a cloud API.')
       } else {
         setAuthError('Something went wrong. Please try again in a moment.')
       }
